@@ -1,0 +1,38 @@
+Distribucion de MiniBuzon Seguro
+
+G1 - Rutas Express
+Johansell: crear reportes en routes/reportes.js
+Rama: feature/G1/Reportes-Johansell
+John: listar, buscar, borrar y ver imagenes en routes/admin.js
+Rama: feature/G1/Admin-John
+
+G2 - Frontend
+Eliana: index.html y styles.css (una sola pagina).
+Rama: feature/G2/Frontend-Eliana
+Alejandro: app.js (formularios, login, busqueda, CSRF y XSS).
+Rama: feature/G2/JavaScript-Alejandro
+
+G3 - SQLite
+Albert: database.js, crear tabla y conexion.
+Rama: feature/G3/Database-Albert
+Junior: reportRepository.js, CRUD con SQL parametrizado.
+Rama: feature/G3/Repository-Junior
+
+G4 - Login y CSRF
+Angel: auth.js, cuenta administrativa y sesion.
+Rama: feature/G4/Auth-Angel
+Luis: csrf.js, token y validacion CSRF.
+Rama: feature/G4/CSRF-Luis
+
+G5 - Seguridad e integracion
+Jorge: server.js, middlewares, repositorio y merges.
+Rama: feature/G5/Server-Jorge
+Rachel: uploads.js, validacion y guardado seguro de imagenes.
+Rama: feature/G5/Uploads-Rachel
+
+IMPORTANTE:
+- Cada uno trabaja en su rama y entrega codigo funcional + ADR.
+- El mas experimentado guia a su companero.
+- Todos abren Pull Requests a develop; SOLO JORGE hace los merges.
+- No subir .env, claves, minibuzon.db, imagenes privadas ni node_modules.
+- Debemos probar SQL Injection, XSS, CSRF y archivos maliciosos.

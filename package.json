@@ -1,0 +1,21 @@
+{
+  "name": "minibuzon-seguro",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Estructura inicial sin implementacion - MiniBuzon Seguro",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=24 <27"
+  },
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "dev": "node --watch --env-file=.env server.js"
+  },
+  "dependencies": {
+    "express": "5.3.0",
+    "express-session": "1.19.0",
+    "helmet": "8.3.0",
+    "multer": "2.5.0",
+    "sharp": "0.35.5"
+  }
+}

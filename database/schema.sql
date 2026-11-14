@@ -1,0 +1,2 @@
+-- TODO (Albert): crear tabla reportes segun PDF de Base de Datos.
+-- El SQL completo de referencia esta documentado en docs/MiniBuzonSeguro_Base_de_Datos.pdf.
