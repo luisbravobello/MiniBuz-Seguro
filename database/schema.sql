@@ -1,2 +1,60 @@
--- TODO (Albert): crear tabla reportes segun PDF de Base de Datos.
--- El SQL completo de referencia esta documentado en docs/MiniBuzonSeguro_Base_de_Datos.pdf.
+-- =====================================================================
+-- MiniBuzon Seguro - Esquema SQLite de REFERENCIA (responsable: Albert, G3)
+-- Version del esquema: 1
+--
+-- El esquema EJECUTABLE esta en database/esquema.js (constante ESQUEMA_SQL)
+-- y lo aplica database.js al iniciar, como indica el PDF de BD.
+--
+-- Este archivo esta totalmente comentado a proposito: Visual Studio analiza
+-- los .sql como SQL Server (T-SQL) y marca como error la sintaxis valida de
+-- SQLite (IF NOT EXISTS, STRICT, GLOB...). No editar a mano; regenerar con:
+--     node database/generarSchemaSql.js
+-- =====================================================================
+--
+-- CREATE TABLE IF NOT EXISTS reportes (
+--     -- Identificador generado por SQLite. AUTOINCREMENT evita que se
+--     -- reutilice el id de un reporte borrado. El cliente nunca lo envia.
+--     id      INTEGER PRIMARY KEY AUTOINCREMENT,
+--
+--     -- Obligatorio; 1-120 caracteres reales despues de quitar espacios.
+--     titulo  TEXT NOT NULL
+--             CHECK (length(trim(titulo)) BETWEEN 1 AND 120
+--                    AND length(titulo) <= 120),
+--
+--     -- Obligatorio; 1-2000 caracteres reales despues de quitar espacios.
+--     mensaje TEXT NOT NULL
+--             CHECK (length(trim(mensaje)) BETWEEN 1 AND 2000
+--                    AND length(mensaje) <= 2000),
+--
+--     -- Opcional (NULL = sin adjunto). Solo un nombre de archivo plano:
+--     --   - caracteres permitidos: letras, digitos, punto, guion y guion bajo
+--     --     (impide '/', '\', ':' y por tanto rutas absolutas o relativas)
+--     --   - sin '..' ni nombre oculto que empiece con '.'
+--     --   - extension final .jpg, .jpeg o .png
+--     imagen  TEXT
+--             CHECK (imagen IS NULL OR (
+--                        length(imagen) BETWEEN 5 AND 100
+--                    AND imagen NOT GLOB '*[^0-9A-Za-z._-]*'
+--                    AND imagen NOT GLOB '.*'
+--                    AND instr(imagen, '..') = 0
+--                    AND (   lower(imagen) GLOB '*.jpg'
+--                         OR lower(imagen) GLOB '*.jpeg'
+--                         OR lower(imagen) GLOB '*.png'))),
+--
+--     -- Fecha UTC asignada por SQLite al insertar ('AAAA-MM-DD HH:MM:SS').
+--     -- El formulario no la decide; el CHECK impide formatos arbitrarios.
+--     fecha   TEXT NOT NULL DEFAULT (datetime('now'))
+--             CHECK (fecha GLOB '[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]')
+-- ) STRICT;
+-- -- STRICT: SQLite rechaza valores de tipo incorrecto (p. ej. un BLOB o un
+-- -- numero en titulo) en lugar de convertirlos silenciosamente.
+--
+-- -- Un archivo de imagen pertenece a un solo reporte. Evita que borrar un
+-- -- reporte elimine la imagen de otro. Indice parcial: no afecta a NULL.
+-- CREATE UNIQUE INDEX IF NOT EXISTS ux_reportes_imagen
+--     ON reportes (imagen)
+--     WHERE imagen IS NOT NULL;
+--
+-- -- Nota sobre indices: el panel ordena por id DESC (usa la PRIMARY KEY) y la
+-- -- busqueda usa LIKE '%texto%', que no puede aprovechar un indice B-tree.
+-- -- Con el volumen de una demo local no se crean indices adicionales.
