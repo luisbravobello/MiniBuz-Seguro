@@ -1,1 +1,63 @@
-<!-- TODO Eliana: una pantalla con formulario publico, acceso administrativo y listado admin. -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiniBuzón Seguro</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="cabecera">
+    <h1>MiniBuzón Seguro</h1>
+    <p>Envía tu reporte. Solo la administración puede leerlo.</p>
+  </header>
+
+  <main class="contenedor">
+    <section class="tarjeta" aria-labelledby="titulo-reporte">
+      <h2 id="titulo-reporte">Nuevo reporte</h2>
+      <form id="form-reporte" enctype="multipart/form-data" novalidate>
+        <label for="titulo">Título</label>
+        <input id="titulo" name="titulo" type="text" maxlength="120" required autocomplete="off">
+
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="5" maxlength="2000" required></textarea>
+
+        <label for="imagen">Imagen (opcional)</label>
+        <input id="imagen" name="imagen" type="file" accept="image/jpeg,image/png" aria-describedby="ayuda-imagen">
+        <small id="ayuda-imagen" class="ayuda">JPG o PNG, máximo 2 MB.</small>
+
+        <button type="submit">Enviar reporte</button>
+        <p id="msg-reporte" class="msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="seccion-login" class="tarjeta" aria-labelledby="titulo-login">
+      <h2 id="titulo-login">Administración</h2>
+      <form id="form-login" novalidate>
+        <label for="password">Contraseña</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button type="submit">Entrar</button>
+        <p id="msg-login" class="msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="panel-admin" class="tarjeta" aria-labelledby="titulo-panel" hidden>
+      <div class="panel-cabecera">
+        <h2 id="titulo-panel">Reportes recibidos</h2>
+        <button id="btn-salir" type="button" class="secundario">Cerrar sesión</button>
+      </div>
+
+      <form id="form-buscar" class="buscar" role="search">
+        <label for="buscar" class="oculto">Buscar por título</label>
+        <input id="buscar" name="buscar" type="search" maxlength="100" placeholder="Buscar por título">
+        <button type="submit" class="secundario">Buscar</button>
+      </form>
+
+      <p id="msg-panel" class="msg" role="status" aria-live="polite"></p>
+      <ul id="lista-reportes" class="lista"></ul>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
