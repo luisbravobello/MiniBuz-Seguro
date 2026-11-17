@@ -4,7 +4,7 @@ const fs = require('node:fs');
 
 const repo = require('../reportRepository');
 const { requireAdmin } = require('../auth');
-const { verificarCsrf } = require('../csrf');
+const { validarCsrf } = require('../csrf');
 
 const router = express.Router();
 const carpetaImagenes = path.join(__dirname, '..', 'private-uploads');
@@ -41,7 +41,7 @@ router.get('/reportes', requireAdmin, (req, res) => {
   res.json(reportes);
 });
 
-router.delete('/reportes/:id', requireAdmin, verificarCsrf, (req, res) => {
+router.delete('/reportes/:id', requireAdmin, validarCsrf, (req, res) => {
   const id = leerId(req.params.id);
   if (!id) return res.status(400).json({ error: 'ID no valido' });
 

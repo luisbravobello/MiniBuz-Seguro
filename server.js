@@ -79,15 +79,6 @@ registerAuthRoutes(app, {
 // Luis: emitir un token por sesion, solo despues de comprobar admin.
 app.get('/api/admin/csrf', requireAdmin, csrf.emitirToken);
 
-/**
- * Adaptador TEMPORAL de integracion: John usa verificarCsrf, pero Luis
- * exporta validarCsrf. No cambia la comprobacion: es la misma funcion.
- * John debe corregir su import en routes/admin.js y despues quitar esto.
- */
-if (typeof csrf.verificarCsrf !== 'function' && typeof csrf.validarCsrf === 'function') {
-  csrf.verificarCsrf = csrf.validarCsrf;
-}
-
 // Rutas de G1: reportes publicos y operaciones privadas de administracion.
 app.use('/api/reportes', require('./routes/reportes'));
 app.use('/api/admin', require('./routes/admin'));

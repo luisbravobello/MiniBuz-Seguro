@@ -171,7 +171,7 @@ function crearTarjeta(r) {
 
   li.append(h3, fecha, p);
 
-  if (r.imagen) {
+  if (r.tieneImagen) {
     const btnImg = document.createElement('button');
     btnImg.type = 'button';
     btnImg.textContent = 'Ver imagen';
